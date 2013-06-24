@@ -1,0 +1,39 @@
+---
+driver_plugin: vagrant
+driver_config:
+  require_chef_omnibus: true
+
+platforms:
+- name: ubuntu-12.04
+  driver_config:
+    box: opscode-ubuntu-12.04
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+    customize:
+      memory: 1024
+    
+- name: centos-6.4
+  driver_config:
+    box: opscode-centos-6.4
+    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+    customize:
+      memory: 1024
+
+suites:
+- name: default
+  run_list:
+  - recipe[minitest-handler]
+  - recipe[ice]
+  attributes:
+    ice:
+      version: '0.0.1'
+      war_url: 'https://s3.amazonaws.com/ice-app'
+      skip_manifest_check: true
+      checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
+      company_name: 'Your Company'
+      billing_aws_access_key_id: 'billing_aws_access_key_id' 
+      billing_aws_secret_access_key: 'billing_aws_serect_key'
+      billing_s3_bucket_name: 'billing_bucket_name'
+      billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
+      work_s3_bucket_name: 'work_bucket_name'
+      work_s3_bucket_prefix: 'work_bucket_prefix_if_any/'
+      start_millis: '1367380800000'
