@@ -3,9 +3,8 @@
     # passed to the Chef tests via node attributes applied to the test suites.
 
 # To keep the YAML as simple as possible, some values are computed here
-AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] ||'billing_aws_access_key_id'
-AWS_ACCESS_KEY_SECRET = ENV['AWS_ACCESS_KEY_SECRET'] ||
-                        ENV['AWS_SECRET_ACCESS_KEY'] || 'billing_aws_secret_key'
+AWS_ACCESS_KEY_ID = ENV['ICE_AWS_ACCESS_KEY_ID'] ||'ice_billing_aws_access_key_id'
+AWS_ACCESS_KEY_SECRET = ENV['ICE_AWS_ACCESS_KEY_SECRET'] || 'ice_billing_aws_secret_key'
 %>
 ---
 driver_plugin: vagrant
@@ -32,7 +31,7 @@ suites:
   run_list:
   - recipe[minitest-handler]
   - recipe[ice]
-  - recipe[ice-test]
+  - recipe[ice_cookbook_test]
   attributes:
     ice:
       version: 0.0.1
