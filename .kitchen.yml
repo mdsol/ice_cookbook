@@ -31,7 +31,7 @@ suites:
       checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
       company_name: 'Your Company'
       billing_aws_access_key_id: 'billing_aws_access_key_id' 
-      billing_aws_secret_access_key: 'billing_aws_serect_key'
+      billing_aws_secret_key: 'billing_aws_secret_key'
       billing_s3_bucket_name: 'billing_bucket_name'
       billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
       work_s3_bucket_name: 'work_bucket_name'

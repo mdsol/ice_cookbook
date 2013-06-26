@@ -27,7 +27,7 @@ end
 include_recipe 'java'
 include_recipe 'tomcat'
 
-java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_access_key']}"
+java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
 
 node.override['tomcat']['java_options'] = java_options
 node.override['nginx']['default_site_enabled'] = false
@@ -47,7 +47,7 @@ artifact_deploy 'ice' do
 
   before_deploy Proc.new {
     # Create ice local procesor work directory
-    directory node['ice']['processor']['localDir'] do
+    directory node['ice']['processor']['local_dir'] do
         owner node['tomcat']['user']
         group node['tomcat']['group']
         mode '0755'
@@ -55,7 +55,7 @@ artifact_deploy 'ice' do
     end
 
     # Create ice local reader work directory
-    directory node['ice']['reader']['localDir'] do
+    directory node['ice']['reader']['local_dir'] do
         owner node['tomcat']['user']
         group node['tomcat']['group']
         mode '0755'

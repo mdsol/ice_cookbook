@@ -7,13 +7,13 @@
 ##
 
 ice.processor=<%= node['ice']['processor']['enabled'] ? 'true' : 'false' %>
-ice.processor.localDir=<%= node['ice']['processor']['localDir'] %>
+ice.processor.localDir=<%= node['ice']['processor']['local_dir'] %>
 
 ice.billing_s3bucketname=<%= node['ice']['billing_s3_bucket_name'] %>
 ice.billing_s3bucketprefix=<%= node['ice']['billing_s3_bucket_prefix'] %>
 
 ice.reader=<%= node['ice']['reader']['enabled'] ? 'true' : 'false' %>
-ice.reader.localDir=<%= node['ice']['reader']['localDir'] %>
+ice.reader.localDir=<%= node['ice']['reader']['local_dir'] %>
 
 ice.work_s3bucketname=<%= node['ice']['work_s3_bucket_name'] %>
 ice.work_s3bucketprefix=<%= node['ice']['work_s3_bucket_prefix'] %>
@@ -33,6 +33,6 @@ ice.reservationCapacityPoller=<%= node['ice']['reservation_capacity_poller'] %>
 # # reservation period, possible values are oneyear, threeyear
 ice.reservationPeriod=<%= node['ice']['reservation_period'] %>
 # # reservation utilization, possible values are LIGHT, HEAVY
-ice.reservationUtilization=<%= node['ice']['reservationUtilization'] %>
+ice.reservationUtilization=<%= node['ice']['reservation_utilization'] %>
 
 ice.companyName=<%= node['ice']['company_name'] %>

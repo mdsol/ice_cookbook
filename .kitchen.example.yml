@@ -37,7 +37,7 @@ platforms:
       checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
       company_name: 'Your Company'
       billing_aws_access_key_id: <%= ICE_AWS_ACCESS_KEY_ID %>
-      billing_aws_secret_access_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
+      billing_aws_secret_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
       billing_s3_bucket_name: 'billing_bucket_name'
       billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
       work_s3_bucket_name: 'work_bucket_name'
@@ -65,7 +65,7 @@ platforms:
       checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
       company_name: 'Your Company'
       billing_aws_access_key_id: <%= ICE_AWS_ACCESS_KEY_ID %>
-      billing_aws_secret_access_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
+      billing_aws_secret_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
       billing_s3_bucket_name: 'billing_bucket_name'
       billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
       work_s3_bucket_name: 'work_bucket_name'
