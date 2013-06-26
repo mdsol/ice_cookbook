@@ -15,6 +15,6 @@ server {
   }
 
   location ~ /current/ {
-    rewrite ^/current/(.*)$ http://<%= node['ice']['public_hostname'] %>/$1 redirect;
+    rewrite ^/current/(.*)$ http://$host/$1 redirect;
   }
 }
