@@ -27,6 +27,10 @@ end
 include_recipe 'java'
 include_recipe 'tomcat'
 
+java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_access_key']}"
+
+node.override['tomcat']['java_options'] = java_options
+
 artifact_deploy 'ice' do
   version node['ice']['version']
   artifact_location "#{node['ice']['war_url']}/ice-#{node['ice']['version']}.war"

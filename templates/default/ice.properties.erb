@@ -9,9 +9,6 @@
 ice.processor=<%= node['ice']['processor']['enabled'] ? 'true' : 'false' %>
 ice.processor.localDir=<%= node['ice']['processor']['localDir'] %>
 
-ice.s3AccessKeyId=<%= node['ice']['billing_aws_access_key_id'] %>
-ice.s3SecretKey=<%= node['ice']['billing_aws_secret_access_key'] %>
-
 ice.billing_s3bucketname=<%= node['ice']['billing_s3_bucket_name'] %>
 ice.billing_s3bucketprefix=<%= node['ice']['billing_s3_bucket_prefix'] %>
 
