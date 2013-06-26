@@ -10,7 +10,7 @@ Requirements
 Chef 11.4.0+ and Ohai 6.10+ for platform_family use.
 
 This cookbook requires attributes be set based on the instructions for 
-configuring the [Netflix Ice application][https://github.com/Netflix/ice].
+configuring the [Netflix Ice application](https://github.com/Netflix/ice).
 
 You will also need to enable Amazon's programmatic billing access to 
 receive detailed billing reports.
