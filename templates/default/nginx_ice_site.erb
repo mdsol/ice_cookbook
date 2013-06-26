@@ -3,7 +3,7 @@ server {
 
   root <%= "#{node['tomcat']['webapp_dir']}/current" %>;
 
-  server_name <%= node['ice']['public_hostname'] %>;
+  server_name <%= node['ice']['public_hostname'] %> ice.* ;
 
   location / {
     proxy_set_header X-Forwarded-Host $host;
