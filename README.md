@@ -36,7 +36,7 @@ Attributes
 
 * `node['ice']['version']` - Ice version to download and install.  These 
 versions are packaged and hosted by Medidata Solutions until we can get the 
-Netflix Ice team to package and host the Ice official releases.
+Netflix Ice team to package and host official ice releases.
 * `node['ice']['checksum']` - Checksum for Ice WAR file.
 * `node['ice']['war_url']` - HTTP URL for Ice WAR file.
 * `node['ice']['force_redeploy']` - Will force a redeploy of the Ice WAR file.
