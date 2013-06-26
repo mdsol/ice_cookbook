@@ -1,3 +1,12 @@
+<%  # This file contains ERB-interpreted YAML directives for testkitchen.
+    # Secrets are read from the local execution ENV into this file, and
+    # passed to the Chef tests via node attributes applied to the test suites.
+
+# To keep the YAML as simple as possible, some values are computed here
+AWS_ACCESS_KEY_ID = ENV['AWS_ACCESS_KEY_ID'] ||'billing_aws_access_key_id'
+AWS_ACCESS_KEY_SECRET = ENV['AWS_ACCESS_KEY_SECRET'] ||
+                        ENV['AWS_SECRET_ACCESS_KEY'] || 'billing_aws_secret_key'
+%>
 ---
 driver_plugin: vagrant
 driver_config:
@@ -37,3 +46,5 @@ suites:
       work_s3_bucket_name: 'work_bucket_name'
       work_s3_bucket_prefix: 'work_bucket_prefix_if_any/'
       start_millis: '1367380800000'
+      billing_aws_access_key_id: <%= AWS_ACCESS_KEY_ID %>
+      billing_aws_secret_key: <%= AWS_ACCESS_KEY_SECRET %>
