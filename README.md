@@ -75,4 +75,4 @@ TODO: Add usage examples.
 
 ## Author
 
-* [Ray Rodriguez](https://github.com/rayrod2030)
+* Author: [Ray Rodriguez](https://github.com/rayrod2030)
