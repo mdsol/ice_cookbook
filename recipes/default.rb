@@ -83,7 +83,7 @@ end
 
 if node['ice']['reader']['enabled'] == true
   # Configure nginx site reverse proxy
-  if node['ice']['public_hostname'].empty?
+  if node['ice']['public_hostname'].nil?
     if node.attribute?('ec2')
       node.override['ice']['public_hostname'] = node['ec2']['public_hostname']
     elsif node.attribute?('cloud')

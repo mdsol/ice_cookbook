@@ -4,20 +4,20 @@ node.default['ice']['checksum']                             = '4242700cb88d6b7ea
 node.default['ice']['war_url']                              = 'https://s3.amazonaws.com/ice-app'
 node.default['ice']['force_redeploy']                       = false
 
-node.default['ice']['company_name']                         = ''
+node.default['ice']['company_name']                         = nil
 
 node.default['ice']['processor']['enabled']                 = true
 node.default['ice']['processor']['localDir']                = '/var/ice_processor'
 
 # S3 keys for accessing billing files
-node.default['ice']['billing_aws_access_key_id']            = ''
-node.default['ice']['billing_aws_secret_access_key']        = ''
+node.default['ice']['billing_aws_access_key_id']            = nil
+node.default['ice']['billing_aws_secret_access_key']        = nil
 
-node.default['ice']['billing_s3_bucket_name']               = ''
-node.default['ice']['billing_s3_bucket_prefix']             = ''
+node.default['ice']['billing_s3_bucket_name']               = nil
+node.default['ice']['billing_s3_bucket_prefix']             = nil
 
-node.default['ice']['work_s3_bucket_name']                  = '' 
-node.default['ice']['work_s3_bucket_prefix']                = ''
+node.default['ice']['work_s3_bucket_name']                  = nil
+node.default['ice']['work_s3_bucket_prefix']                = nil
 
 node.default['ice']['reader']['enabled']                    = true
 node.default['ice']['reader']['localDir']                   = '/var/ice_reader'
@@ -34,4 +34,4 @@ node.default['ice']['reservation_period']                   = 'threeyear'
 node.default['ice']['reservationUtilization']               = 'HEAVY'
 
 # This hostname is used for the nginx reverse proxy configuration
-node.default['ice']['public_hostname']                      = ''
+node.default['ice']['public_hostname']                      = nil
