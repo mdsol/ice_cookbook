@@ -34,17 +34,15 @@ suites:
   - recipe[ice]
   attributes:
     ice:
-      version: '0.0.1'
-      war_url: 'https://s3.amazonaws.com/ice-app'
+      version: 0.0.1
+      war_url: https://s3.amazonaws.com/ice-app
       skip_manifest_check: true
-      checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
-      company_name: 'Your Company'
-      billing_aws_access_key_id: 'billing_aws_access_key_id' 
-      billing_aws_secret_key: 'billing_aws_secret_key'
-      billing_s3_bucket_name: 'billing_bucket_name'
-      billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
-      work_s3_bucket_name: 'work_bucket_name'
-      work_s3_bucket_prefix: 'work_bucket_prefix_if_any/'
-      start_millis: '1367380800000'
+      checksum: 4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e
+      company_name: Your Company
       billing_aws_access_key_id: <%= AWS_ACCESS_KEY_ID %>
       billing_aws_secret_key: <%= AWS_ACCESS_KEY_SECRET %>
+      billing_s3_bucket_name: kitchen-tests
+      work_s3_bucket_name: kitchen-tests
+      billing_s3_bucket_prefix: ice-cookbook-tests-billing-<%= ENV['USER'] %>/
+      work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
+      start_millis: 1367380800000
