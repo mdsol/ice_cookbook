@@ -73,7 +73,41 @@ in the UI.
 
 ## Usage
 
-TODO: Add usage examples.
+This recipe allows you to deploy Netflix Ice as a standalone node running both the
+processor and reader or as seperate nodes running a processor and a reader which is the
+deployment layout that the Netflix Ice team recommends.
+
+Here is a sample role for creating an Ice processor node:
+
+```YAML
+chef_type:           role
+default_attributes:
+description:         
+env_run_lists:
+json_class:          Chef::Role
+name:                ice-processor
+override_attributes:
+  ice:
+    billing_aws_access_key_id:     YOURAWSKEYID
+    billing_aws_secret_access_key: YOURAWSSECRETKEY
+    billing_s3_bucket_name:        ice-billing
+    version:                       0.0.1
+    war_url:                       https://s3.amazonaws.com/ice-app
+    checksum:                      4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e
+    skip_manifest_check:           false
+    company_name:                  Company Name
+    force_deploy:                  false
+    processor:
+      enabled: true
+    reader:
+      enabled: false
+    start_millis:                  1357016400000
+    work_s3_bucket_name:           ice-work
+  tomcat:
+    catalina_options: -Xmx1024M -Xms1024M
+run_list:
+  recipe[ice]
+```
 
 ## Author
 
