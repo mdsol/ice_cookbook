@@ -26,7 +26,6 @@ end
 
 include_recipe 'java'
 include_recipe 'tomcat'
-include_recipe 'nginx'
 
 java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_access_key']}"
 
@@ -82,6 +81,8 @@ artifact_deploy 'ice' do
 end
 
 if node['ice']['reader']['enabled'] == true
+  include_recipe 'nginx'
+
   # Configure nginx site reverse proxy
   if node['ice']['public_hostname'].nil?
     if node.attribute?('ec2')
