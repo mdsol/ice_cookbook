@@ -28,8 +28,10 @@ The following cookbooks are dependencies:
 
 Tested on 
 
-* Ubuntu 12.04+
-* Centos 6.4+
+* Ubuntu 12.04
+* Centos 6.4
+
+Other Debian and RHEL family distributions are assumed to work.
 
 Attributes
 ==========
