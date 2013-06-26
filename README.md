@@ -1,7 +1,7 @@
 Description
 ===========
 
-Application cookbook for installing the Netflix Ice Amazon Web Services usage
+Application cookbook for installing the Netflix Ice AWS usage
 and cost reporting application stack.
 
 Requirements
