@@ -26,10 +26,12 @@ end
 
 include_recipe 'java'
 include_recipe 'tomcat'
+include_recipe 'nginx'
 
 java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_access_key']}"
 
 node.override['tomcat']['java_options'] = java_options
+node.override['nginx']['default_site_enabled'] = false
 
 artifact_deploy 'ice' do
   version node['ice']['version']
@@ -77,4 +79,31 @@ artifact_deploy 'ice' do
       action :restart
     end
   }
+end
+
+if node['ice']['reader']['enabled'] == true
+  # Configure nginx site reverse proxy
+  if node['ice']['public_hostname'].empty?
+    if node.attribute?('ec2')
+      node.override['ice']['public_hostname'] = node['ec2']['public_hostname']
+    elsif node.attribute?('cloud')
+      node.override['ice']['public_hostname'] = node['cloud']['public_hostname']
+    else
+      node.override['ice']['public_hostname'] = node['fqdn']
+    end
+  end
+  
+  # Disable default site first
+  nginx_site 'default', :enable => false
+
+  # Generate nginx ice site
+  template "#{node['nginx']['dir']}/sites-available/ice" do
+    source 'nginx_ice_site.erb'
+    mode 0644
+    owner node['nginx']['user']
+    group node['nginx']['group']
+  end
+
+  # Enable ice site
+  nginx_site 'ice'
 end

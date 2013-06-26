@@ -31,4 +31,7 @@ node.default['ice']['reservation_capacity_poller']          = false
 # # reservation period, possible values are oneyear, threeyear
 node.default['ice']['reservation_period']                   = 'threeyear' 
 # # reservation utilization, possible values are LIGHT, HEAVY
-node.default['ice']['reservationUtilization']               = 'HEAVY' 
+node.default['ice']['reservationUtilization']               = 'HEAVY'
+
+# This hostname is used for the nginx reverse proxy configuration
+node.default['ice']['public_hostname']                      = ''
