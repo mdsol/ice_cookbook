@@ -1,6 +1,6 @@
 # Ice version
-node.default['ice']['version']                              = '0.0.1'
-node.default['ice']['checksum']                             = '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
+node.default['ice']['version']                              = '0.0.2'
+node.default['ice']['checksum']                             = 'c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a'
 node.default['ice']['war_url']                              = 'https://s3.amazonaws.com/ice-app'
 node.default['ice']['force_redeploy']                       = false
 
