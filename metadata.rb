@@ -1,6 +1,7 @@
 name             'ice'
-maintainer       'Ray Rodriguez'
-maintainer_email 'rayrod2030@gmail.com'
+maintainer       'Medidata Solutions'
+maintainer_email 'rarodriguez@mdsol.com'
+license          "Apache 2.0"
 description      'Installs/Configures ice'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
 version          '0.2.8'
