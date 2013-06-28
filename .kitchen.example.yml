@@ -31,24 +31,24 @@ platforms:
       memory: 1024
   attributes:
     ice:
-      version: '0.0.1'
-      war_url: 'https://s3.amazonaws.com/ice-app'
+      version: 0.0.2
+      war_url: https://s3.amazonaws.com/ice-app
       skip_manifest_check: true
-      checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
-      company_name: 'Your Company'
+      checksum: c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a 
+      company_name: Your Company
       billing_aws_access_key_id: <%= ICE_AWS_ACCESS_KEY_ID %>
       billing_aws_secret_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
-      billing_s3_bucket_name: 'billing_bucket_name'
-      billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
-      work_s3_bucket_name: 'work_bucket_name'
-      work_s3_bucket_prefix: 'work_bucket_prefix_if_any/'
-      start_millis: '1367380800000'
+      billing_s3_bucket_name: billing_bucket_name
+      billing_s3_bucket_prefix: billing_bucket_prefix_if_any/
+      work_s3_bucket_name: work_bucket_name
+      work_s3_bucket_prefix: work_bucket_prefix_if_any/
+      start_millis: 1367380800000
       # The following settings are only required for dealing with multiple AWS accounts
       accounts: { <%= ICE_ACCOUNT1_NAME %>: <%= ICE_ACCOUNT1_NUMBER %>, 
             <%= ICE_ACCOUNT2_NAME %>: <%= ICE_ACCOUNT2_NUMBER %>,
             <%= ICE_ACCOUNT3_NAME %>: <%= ICE_ACCOUNT3_NUMBER %>
             }
-      owner_account: 'account1'
+      owner_account: account1
       linked_accounts: [ account2,account3 ]
     
 - name: centos-6.4
@@ -59,22 +59,22 @@ platforms:
       memory: 1024
   attributes:
     ice:
-      version: '0.0.1'
-      war_url: 'https://s3.amazonaws.com/ice-app'
+      version: 0.0.2
+      war_url: https://s3.amazonaws.com/ice-app
       skip_manifest_check: true
-      checksum: '4242700cb88d6b7ea4ed16d1725203ac7e32fdac89a9ac555a96a4b8bbb6946e'
-      company_name: 'Your Company'
+      checksum: c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a 
+      company_name: Your Company
       billing_aws_access_key_id: <%= ICE_AWS_ACCESS_KEY_ID %>
       billing_aws_secret_key: <%= ICE_AWS_ACCESS_KEY_SECRET %>
-      billing_s3_bucket_name: 'billing_bucket_name'
-      billing_s3_bucket_prefix: 'billing_bucket_prefix_if_any/'
-      work_s3_bucket_name: 'work_bucket_name'
-      work_s3_bucket_prefix: 'work_bucket_prefix_if_any/'
-      start_millis: '1367380800000'
+      billing_s3_bucket_name: billing_bucket_name
+      billing_s3_bucket_prefix: billing_bucket_prefix_if_any/
+      work_s3_bucket_name: work_bucket_name
+      work_s3_bucket_prefix: work_bucket_prefix_if_any/
+      start_millis: 1367380800000
       # The following settings are only required for dealing with multiple AWS accounts
       accounts: { <%= ICE_ACCOUNT1_NAME %>: <%= ICE_ACCOUNT1_NUMBER %>, 
             <%= ICE_ACCOUNT2_NAME %>: <%= ICE_ACCOUNT2_NUMBER %>,
             <%= ICE_ACCOUNT3_NAME %>: <%= ICE_ACCOUNT3_NUMBER %>
             }
-      owner_account: 'account1'
+      owner_account: account1
       linked_accounts: [ account2,account3 ]
