@@ -49,7 +49,7 @@ UI header.
 processor.
 * `node['ice']['billing_aws_access_key_id']` - AWS access key id used for
 accessing AWS detailed billing files from S3.
-* `node['ice']['billing_aws_secret_key']` - AWS secret key used for
+* `node['ice']['billing_secret_key']` - AWS secret key used for
 accessing AWS detailed billing files from S3.
 * `node['ice']['billing_s3_bucket_name']` - Name of the S3 bucket containing
 the AWS detailed billing files.
@@ -88,7 +88,7 @@ name:                ice-processor
 override_attributes:
   ice:
     billing_aws_access_key_id:     YOURAWSKEYID
-    billing_aws_secret_access_key: YOURAWSSECRETKEY
+    billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
     version:                       0.0.2
     war_url:                       https://s3.amazonaws.com/ice-app
@@ -119,7 +119,7 @@ name:                ice-reader
 override_attributes:
   ice:
     billing_aws_access_key_id:     YOURAWSKEYID
-    billing_aws_secret_access_key: YOURAWSSECRETKEY
+    billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
     version:                       0.0.2
     war_url:                       https://s3.amazonaws.com/ice-app
