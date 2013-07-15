@@ -1,0 +1,37 @@
+{
+  "name": "ice",
+  "description": "Installs/Configures ice",
+  "long_description": "Description\n===========\n\nApplication cookbook for installing the Netflix Ice AWS usage\nand cost reporting application.\n\nRequirements\n============\n\nChef 11.4.0+ and Ohai 6.10+ for platform_family use.\n\nThis cookbook requires attributes be set based on the instructions for \nconfiguring the [Netflix Ice application](https://github.com/Netflix/ice).\n\nYou will also need to enable Amazon's programmatic billing access to \nreceive detailed billing reports.\n\nThe following cookbooks are dependencies:\n\n* apt (on ubuntu)\n* openssl\n* java\n* tomcat\n* nginx\n* artifact (Riot Games)\n\n## Platform:\n\nTested on \n\n* Ubuntu 12.04\n* Centos 6.4\n\nOther Debian and RHEL family distributions are assumed to work.\n\nAttributes\n==========\n\n* `node['ice']['version']` - Ice version to download and install.  These \nversions are packaged and hosted by Medidata Solutions until we can get the \nNetflix Ice team to package and host official ice releases.\n* `node['ice']['checksum']` - Checksum for Ice WAR file.\n* `node['ice']['war_url']` - HTTP URL for Ice WAR file.\n* `node['ice']['force_redeploy']` - Will force a redeploy of the Ice WAR file.\n* `node['ice']['company_name']` - Organization name that is displayed in the \nUI header.\n* `node['ice']['processor']['enabled']` - Enables the Ice processor.\n* `node['ice']['processor']['local_dir']` - Local work directory for the Ice\nprocessor.\n* `node['ice']['billing_aws_access_key_id']` - AWS access key id used for\naccessing AWS detailed billing files from S3.\n* `node['ice']['billing_secret_key']` - AWS secret key used for\naccessing AWS detailed billing files from S3.\n* `node['ice']['billing_s3_bucket_name']` - Name of the S3 bucket containing\nthe AWS detailed billing files.\n* `node['ice']['billing_s3_bucket_prefix']` - Directory in the S3 billing bucket \ncontaining AWS detailed billing files.\n* `node['ice']['work_s3_bucket_name']` - Name of the S3 bucket that Ice uses \nfor processed AWS detailed billing files.  This bucket is shared between the Ice\nprocessor and reader.\n* `node['ice']['work_s3_bucket_prefix']` - Directory in the S3 work bucket \ncontaining the processed AWS detailed billing files.\n* `node['ice']['reader']['enabled']` - Enables the Ice reader and installs the\nNginx reverse proxy.\n* `node['ice']['reader']['local_dir']` - Local work directory for the Ice reader.\n* `node['ice']['start_millis']` - Specify the start time in milliseconds for the \nprocessor to start processing billing files.\n* `node['ice']['public_hostname']` - Optional. Fully qualified domain name used for \nconfiguring the Nginx reverse proxy on Ice readers/UI nodes.\n* `node['ice']['accounts']` - Optional.  Hash mapping of AWS account names to \naccount numbers.  This is used within Ice to give accounts human readable names \nin the UI.\n\n## Usage\n\nThis recipe allows you to deploy Netflix Ice as a standalone node running both the\nprocessor and reader or as seperate nodes running a processor and a reader which is the\ndeployment layout that the Netflix Ice team recommends.\n\nHere is a sample role for creating an Ice processor node:\n```YAML\nchef_type:           role\ndefault_attributes:\ndescription:         \nenv_run_lists:\njson_class:          Chef::Role\nname:                ice-processor\noverride_attributes:\n  ice:\n    billing_aws_access_key_id:     YOURAWSKEYID\n    billing_aws_secret_key:        YOURAWSSECRETKEY\n    billing_s3_bucket_name:        ice-billing\n    version:                       0.0.2\n    war_url:                       https://s3.amazonaws.com/ice-app\n    checksum:                      c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a \n    skip_manifest_check:           false\n    company_name:                  Company Name\n    force_deploy:                  false\n    processor:\n      enabled: true\n    reader:\n      enabled: false\n    start_millis:                  1357016400000\n    work_s3_bucket_name:           ice-work\n  tomcat:\n    catalina_options: -Xmx1024M -Xms1024M\nrun_list:\n  recipe[ice]\n```\n\nHere is a sample role for creating an Ice reader node:\n```YAML\nchef_type:           role\ndefault_attributes:\ndescription:         \nenv_run_lists:\njson_class:          Chef::Role\nname:                ice-reader\noverride_attributes:\n  ice:\n    billing_aws_access_key_id:     YOURAWSKEYID\n    billing_aws_secret_key:        YOURAWSSECRETKEY\n    billing_s3_bucket_name:        ice-billing\n    version:                       0.0.2\n    war_url:                       https://s3.amazonaws.com/ice-app\n    checksum:                      c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a \n    skip_manifest_check:           false\n    company_name:                  Company Name\n    force_deploy:                  false\n    processor:\n      enabled: false\n    reader:\n      enabled: true\n    start_millis:                  1357016400000\n    work_s3_bucket_name:           ice-work\n  tomcat:\n    catalina_options: -Xmx1024M -Xms1024M\nrun_list:\n  recipe[ice]\n```\n\n## Author\n\n* Author: [Ray Rodriguez](https://github.com/rayrod2030)\n* Author: [Benton Roberts](https://github.com/benton)\n",
+  "maintainer": "Medidata Solutions",
+  "maintainer_email": "rarodriguez@mdsol.com",
+  "license": "Apache 2.0",
+  "platforms": {
+    "ubuntu": ">= 0.0.0",
+    "centos": ">= 0.0.0"
+  },
+  "dependencies": {
+    "java": ">= 0.0.0",
+    "apt": ">= 0.0.0",
+    "tomcat": ">= 0.0.0",
+    "nginx": ">= 0.0.0",
+    "openssl": ">= 0.0.0",
+    "artifact": ">= 0.0.0"
+  },
+  "recommendations": {
+  },
+  "suggestions": {
+  },
+  "conflicting": {
+  },
+  "providing": {
+  },
+  "replacing": {
+  },
+  "attributes": {
+  },
+  "groupings": {
+  },
+  "recipes": {
+  },
+  "version": "0.2.9"
+}
