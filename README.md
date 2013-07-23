@@ -142,4 +142,5 @@ run_list:
 ## Author
 
 * Author: [Ray Rodriguez](https://github.com/rayrod2030)
-* Author: [Benton Roberts](https://github.com/benton)
+* Contributor: [Benton Roberts](https://github.com/benton)
+* Contributor: [Harry Wilkinson](https://github.com/harryw)
