@@ -11,6 +11,8 @@ version          '0.2.11'
 end
 
 # Cookbook dependencies
-%w{ java apt tomcat nginx openssl artifact }.each do |cb|
+%w{ java apt nginx openssl artifact }.each do |cb|
   depends cb
 end
+
+depends "tomcat", ">= 0.14.0"

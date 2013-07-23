@@ -71,7 +71,7 @@ artifact_deploy 'ice' do
   }
 
   restart Proc.new {
-    service 'tomcat6' do
+    service "tomcat#{node['tomcat']['base_version']}" do
       action :restart
     end
   }
