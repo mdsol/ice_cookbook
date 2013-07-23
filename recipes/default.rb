@@ -96,7 +96,8 @@ if node['ice']['reader']['enabled'] == true
 
   # Generate nginx ice site
   template "#{node['nginx']['dir']}/sites-available/ice" do
-    source 'nginx_ice_site.erb'
+    cookbook node['ice']['nginx_config_cookbook']
+    source node['ice']['nginx_config']
     mode 0644
     owner node['nginx']['user']
     group node['nginx']['group']
