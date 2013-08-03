@@ -28,6 +28,8 @@ node.default['ice']['accounts']                             = {}
 
 node.default['ice']['reservation_capacity_poller']          = false
 
+node.default['ice']['iam_role']                             = 'ice'
+
 # # reservation period, possible values are oneyear, threeyear
 node.default['ice']['reservation_period']                   = 'threeyear' 
 # # reservation utilization, possible values are LIGHT, HEAVY
@@ -35,3 +37,6 @@ node.default['ice']['reservation_utilization']               = 'HEAVY'
 
 # This hostname is used for the nginx reverse proxy configuration
 node.default['ice']['public_hostname']                      = nil
+
+node.default['ice']['nginx_config']                         = 'nginx_ice_site.erb'
+node.default['ice']['nginx_config_cookbook']                = 'ice'

@@ -70,6 +70,12 @@ configuring the Nginx reverse proxy on Ice readers/UI nodes.
 * `node['ice']['accounts']` - Optional.  Hash mapping of AWS account names to 
 account numbers.  This is used within Ice to give accounts human readable names 
 in the UI.
+* `node['ice']['nginx_config']` - Optional.  Nginx site configuration chef 
+template name.  Default: 'nginx_ice_site.erb'.
+* `node['ice']['nginx_config_cookbook']` - Optional. Nginx custom configuration
+cookbook.  Use this if you'd like to bypass the default ice cookbook nginx 
+configuration and implement your own templates and recipes to configure Nginx for
+ice.  Default: 'ice'.
 
 ## Usage
 
@@ -90,9 +96,9 @@ override_attributes:
     billing_aws_access_key_id:     YOURAWSKEYID
     billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
-    version:                       0.0.2
+    version:                       0.0.3
     war_url:                       https://s3.amazonaws.com/ice-app
-    checksum:                      c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a 
+    checksum:                      3b0e5b9ab0e6ca33c20cae71cf4be4682add4a280ed039ef7469356627aab622 
     skip_manifest_check:           false
     company_name:                  Company Name
     force_deploy:                  false
@@ -121,9 +127,9 @@ override_attributes:
     billing_aws_access_key_id:     YOURAWSKEYID
     billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
-    version:                       0.0.2
+    version:                       0.0.3
     war_url:                       https://s3.amazonaws.com/ice-app
-    checksum:                      c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a 
+    checksum:                      3b0e5b9ab0e6ca33c20cae71cf4be4682add4a280ed039ef7469356627aab622 
     skip_manifest_check:           false
     company_name:                  Company Name
     force_deploy:                  false
@@ -142,4 +148,6 @@ run_list:
 ## Author
 
 * Author: [Ray Rodriguez](https://github.com/rayrod2030)
-* Author: [Benton Roberts](https://github.com/benton)
+* Contributor: [Benton Roberts](https://github.com/benton)
+* Contributor: [Harry Wilkinson](https://github.com/harryw)
+* Contributor: [rampire](https://github.com/rampire)

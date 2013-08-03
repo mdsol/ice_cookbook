@@ -24,7 +24,7 @@ end
 include_recipe 'java'
 include_recipe 'tomcat'
 
-java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
+java_options = "#{node['tomcat']['java_options']} -Dice.role=#{node['ice']['iam_role']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
 
 node.override['tomcat']['java_options'] = java_options
 node.override['nginx']['default_site_enabled'] = false
@@ -71,7 +71,7 @@ artifact_deploy 'ice' do
   }
 
   restart Proc.new {
-    service 'tomcat6' do
+    service "tomcat#{node['tomcat']['base_version']}" do
       action :restart
     end
   }
@@ -96,7 +96,8 @@ if node['ice']['reader']['enabled'] == true
 
   # Generate nginx ice site
   template "#{node['nginx']['dir']}/sites-available/ice" do
-    source 'nginx_ice_site.erb'
+    cookbook node['ice']['nginx_config_cookbook']
+    source node['ice']['nginx_config']
     mode 0644
     owner node['nginx']['user']
     group node['nginx']['group']
