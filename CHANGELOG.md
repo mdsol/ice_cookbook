@@ -1,3 +1,17 @@
+## v0.2.10:
+
+### Improvement
+
+- Nginx site template configuration can now be completely customized by setting the 
+nginx_config and nginx_config_cookbook attributes to point to a custom cookbook and
+configuration template.
+
+- Added the Ice IAM role attribute which is added to the system properties if an IAM
+role is used for authentication.  If aws keys and secrets are used instead teh IAM
+role defaults to 'ice' and is ignored by Ice.
+
+- Updated README.
+
 ## v0.2.9:
 
 ### Improvement
