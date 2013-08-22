@@ -70,6 +70,7 @@ configuring the Nginx reverse proxy on Ice readers/UI nodes.
 * `node['ice']['accounts']` - Optional.  Hash mapping of AWS account names to 
 account numbers.  This is used within Ice to give accounts human readable names 
 in the UI.
+* `node['ice']['nginx_port']` - Optional.  Nginx port configuration. Default: 80.
 * `node['ice']['nginx_config']` - Optional.  Nginx site configuration chef 
 template name.  Default: 'nginx_ice_site.erb'.
 * `node['ice']['nginx_config_cookbook']` - Optional. Nginx custom configuration

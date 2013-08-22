@@ -1,5 +1,5 @@
 server {
-  listen   80;
+  listen   <%= node['ice']['nginx_port'] %>;
 
   root <%= "#{node['tomcat']['webapp_dir']}/current" %>;
 
