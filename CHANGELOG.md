@@ -1,10 +1,18 @@
+## v0.2.11:
+
+### Improvement
+
+- Added attribute for configuring the nginx port.  [@akshah123]
+
+- Upgraded the artifact cookbook to 1.9.0 to avoid issues with librarian.
+
 ## v0.2.10:
 
 ### Improvement
 
 - Nginx site template configuration can now be completely customized by setting the 
 nginx_config and nginx_config_cookbook attributes to point to a custom cookbook and
-configuration template.
+configuration template. [@rampire]
 
 - Added the Ice IAM role attribute which is added to the system properties if an IAM
 role is used for authentication.  If aws keys and secrets are used instead teh IAM
@@ -26,3 +34,5 @@ July 11, 2013 and commit: netflix/ice@9c11c8b
 
 - Add Apache V2 license to cookbook
 
+[@akshah123]: https://github.com/akshah123
+[@rampire]: https://github.com/rampire
