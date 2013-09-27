@@ -30,8 +30,10 @@ node.default['ice']['reservation_capacity_poller']          = false
 
 node.default['ice']['iam_role']                             = 'ice'
 
+node.default['ice']['custom_resource_tags']                 = []
+
 # # reservation period, possible values are oneyear, threeyear
-node.default['ice']['reservation_period']                   = 'threeyear' 
+node.default['ice']['reservation_period']                   = 'threeyear'
 # # reservation utilization, possible values are LIGHT, HEAVY
 node.default['ice']['reservation_utilization']               = 'HEAVY'
 
