@@ -77,6 +77,9 @@ template name.  Default: 'nginx_ice_site.erb'.
 cookbook.  Use this if you'd like to bypass the default ice cookbook nginx 
 configuration and implement your own templates and recipes to configure Nginx for
 ice.  Default: 'ice'.
+* `node['ice']['custom_resource_tags']` - Optional.  Array of custom resource tags
+to have ice process.  As described in the ice README you must explicitly enable these
+custom tags in your billing statements.
 
 ## Usage
 
