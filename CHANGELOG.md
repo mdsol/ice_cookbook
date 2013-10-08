@@ -1,3 +1,9 @@
+## v0.2.12:
+
+### Feature
+
+- Added attribute and logic for processing and displaying custom resource tags.  [@rayrod2030]
+
 ## v0.2.11:
 
 ### Improvement
