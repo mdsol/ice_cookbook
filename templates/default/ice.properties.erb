@@ -36,3 +36,9 @@ ice.reservationPeriod=<%= node['ice']['reservation_period'] %>
 ice.reservationUtilization=<%= node['ice']['reservation_utilization'] %>
 
 ice.companyName=<%= node['ice']['company_name'] %>
+
+<% if !node['ice']['custom_resource_tags'].nil? && node['ice']['custom_resource_tags'].count > 0 %>
+ice.customTags=<%= node['ice']['custom_resource_tags'].join(',') %>
+<% end %>
+
+
