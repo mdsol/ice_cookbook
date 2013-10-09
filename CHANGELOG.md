@@ -1,3 +1,9 @@
+## v0.2.13:
+
+### Feature
+
+- Allowed attribute and logic for setting up multiple billing accounts. [@akshah123]
+
 ## v0.2.12:
 
 ### Feature
