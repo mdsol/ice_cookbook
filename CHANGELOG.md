@@ -1,3 +1,9 @@
+## v0.2.13:
+
+### Bug Fix
+
+-  Fixed bug just having custom port number broke links on the site. [@akshah123]
+
 ## v0.2.12:
 
 ### Feature
