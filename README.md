@@ -100,9 +100,9 @@ override_attributes:
     billing_aws_access_key_id:     YOURAWSKEYID
     billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
-    version:                       0.0.3
-    war_url:                       https://s3.amazonaws.com/ice-app
-    checksum:                      3b0e5b9ab0e6ca33c20cae71cf4be4682add4a280ed039ef7469356627aab622 
+    version:                       0.0.4
+    war_url:                       https://s3.amazonaws.com/dl.imedidata.net/ice
+    checksum:                      eb9e7503585553bdebf9d93016bcbe7dc033c21e2b1b2f0df0978ca2968df047
     skip_manifest_check:           false
     company_name:                  Company Name
     force_deploy:                  false
@@ -131,9 +131,9 @@ override_attributes:
     billing_aws_access_key_id:     YOURAWSKEYID
     billing_aws_secret_key:        YOURAWSSECRETKEY
     billing_s3_bucket_name:        ice-billing
-    version:                       0.0.3
-    war_url:                       https://s3.amazonaws.com/ice-app
-    checksum:                      3b0e5b9ab0e6ca33c20cae71cf4be4682add4a280ed039ef7469356627aab622 
+    version:                       0.0.4
+    war_url:                       https://s3.amazonaws.com/dl.imedidata.net/ice
+    checksum:                      eb9e7503585553bdebf9d93016bcbe7dc033c21e2b1b2f0df0978ca2968df047
     skip_manifest_check:           false
     company_name:                  Company Name
     force_deploy:                  false
