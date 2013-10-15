@@ -1,8 +1,8 @@
 ## v0.2.13:
 
-### Feature
+### Bug Fix
 
-- Allowed attribute and logic for setting up multiple billing accounts. [@akshah123]
+-  Fixed bug just having custom port number broke links on the site. [@akshah123]
 
 ## v0.2.12:
 
