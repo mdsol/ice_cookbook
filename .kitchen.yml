@@ -18,6 +18,8 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
     customize:
       memory: 1024
+    network:
+        - ["forwarded_port", {guest: 80, host: 80}]
 
 - name: centos-6.4
   driver_config:
@@ -25,6 +27,8 @@ platforms:
     box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
     customize:
       memory: 1024
+    network:
+        - ["forwarded_port", {guest: 80, host: 80}]
 
 suites:
 - name: default
@@ -34,10 +38,10 @@ suites:
   - recipe[ice_cookbook_test]
   attributes:
     ice:
-      version: 0.0.2
-      war_url: https://s3.amazonaws.com/ice-app
+      version: 0.0.4
+      war_url: https://s3.amazonaws.com/dl.imedidata.net/ice
       skip_manifest_check: true
-      checksum: c5f0c31d8493783814c017a2af575e8d8fa1855359008b868621823381d61d6a 
+      checksum: eb9e7503585553bdebf9d93016bcbe7dc033c21e2b1b2f0df0978ca2968df047
       company_name: Your Company
       billing_aws_access_key_id: <%= AWS_ACCESS_KEY_ID %>
       billing_aws_secret_key: <%= AWS_ACCESS_KEY_SECRET %>
@@ -45,4 +49,4 @@ suites:
       work_s3_bucket_name: kitchen-tests
       billing_s3_bucket_prefix: ice-cookbook-tests-billing-<%= ENV['USER'] %>/
       work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
-      start_millis: 1367380800000
+      start_millis: 1369886400000
