@@ -89,6 +89,10 @@ if node['ice']['reader']['enabled'] == true
     else
       node.override['ice']['public_hostname'] = node['fqdn']
     end
+	
+    if node['ice']['nginx_port'] != 80
+      node.override['ice']['public_hostname'] += ":#{node['ice']['nginx_port']}"
+    end
   end
   
   # Disable default site first
