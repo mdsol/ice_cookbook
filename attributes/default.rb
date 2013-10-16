@@ -16,6 +16,10 @@ node.default['ice']['billing_aws_secret_key']               = nil
 node.default['ice']['billing_s3_bucket_name']               = nil
 node.default['ice']['billing_s3_bucket_prefix']             = nil
 
+node.default['ice']['billing_payerAccountId']				= nil
+node.default['ice']['billing_accessRoleName']				= nil
+node.default['ice']['billing_accessExternalId']				= nil
+
 node.default['ice']['work_s3_bucket_name']                  = nil
 node.default['ice']['work_s3_bucket_prefix']                = nil
 

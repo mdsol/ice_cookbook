@@ -38,7 +38,10 @@ Attributes
 
 * `node['ice']['version']` - Ice version to download and install.  These 
 versions are packaged and hosted by Medidata Solutions until we can get the 
-Netflix Ice team to package and host official ice releases.
+Netflix Ice team to package and host official ice releases.  If you wish to 
+install the latest stable version from [Netflix](https://github.com/netflix/ice#download-snapshot-builds) directly, provide `stable`. 
+<i>Note: this option will always install the latest version even if its not
+backwards compatible.</i>
 * `node['ice']['checksum']` - Checksum for Ice WAR file.
 * `node['ice']['war_url']` - HTTP URL for Ice WAR file.
 * `node['ice']['force_redeploy']` - Will force a redeploy of the Ice WAR file.
