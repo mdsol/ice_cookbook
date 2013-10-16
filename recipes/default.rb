@@ -31,8 +31,12 @@ node.override['nginx']['default_site_enabled'] = false
 
 artifact_deploy 'ice' do
   version node['ice']['version']
-  artifact_location "#{node['ice']['war_url']}/ice-#{node['ice']['version']}.war"
-  artifact_checksum node['ice']['checksum']
+  if node['ice']['version'] == 'stable'
+    artifact_location "https://netflixoss.ci.cloudbees.com/job/ice-master/lastStableBuild/artifact/target/ice.war"
+  else 
+    artifact_location "#{node['ice']['war_url']}/ice-#{node['ice']['version']}.war"
+    artifact_checksum node['ice']['checksum']
+  end
   deploy_to node['tomcat']['webapp_dir']
   owner node['tomcat']['user']
   group node['tomcat']['group']
@@ -89,7 +93,7 @@ if node['ice']['reader']['enabled'] == true
     else
       node.override['ice']['public_hostname'] = node['fqdn']
     end
-	
+  
     if node['ice']['nginx_port'] != 80
       node.override['ice']['public_hostname'] += ":#{node['ice']['nginx_port']}"
     end

@@ -12,6 +12,12 @@ ice.processor.localDir=<%= node['ice']['processor']['local_dir'] %>
 ice.billing_s3bucketname=<%= node['ice']['billing_s3_bucket_name'] %>
 ice.billing_s3bucketprefix=<%= node['ice']['billing_s3_bucket_prefix'] %>
 
+<% if node['ice']['billing_payerAccountId'] %>
+ice.billing_payerAccountId=<%= node['ice']['billing_payerAccountId'] %>
+ice.billing_accessRoleName=<%= node['ice']['billing_accessRoleName'] %>
+ice.billing_accessExternalId=<%= node['ice']['billing_accessExternalId'] %>
+<% end %>
+
 ice.reader=<%= node['ice']['reader']['enabled'] ? 'true' : 'false' %>
 ice.reader.localDir=<%= node['ice']['reader']['local_dir'] %>
 
