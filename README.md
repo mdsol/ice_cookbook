@@ -23,6 +23,7 @@ The following cookbooks are dependencies:
 * tomcat
 * nginx
 * artifact (Riot Games)
+* logrotate
 
 ## Platform:
 
@@ -50,6 +51,9 @@ UI header.
 * `node['ice']['processor']['enabled']` - Enables the Ice processor.
 * `node['ice']['processor']['local_dir']` - Local work directory for the Ice
 processor.
+* `node['ice']['processor']['issue_100_workaround']` - Optional. Work around 
+https://github.com/Netflix/ice/issues/100 by pre-creating the directories it 
+expects to find. Default: false
 * `node['ice']['billing_aws_access_key_id']` - AWS access key id used for
 accessing AWS detailed billing files from S3.
 * `node['ice']['billing_secret_key']` - AWS secret key used for
@@ -80,9 +84,47 @@ template name.  Default: 'nginx_ice_site.erb'.
 cookbook.  Use this if you'd like to bypass the default ice cookbook nginx 
 configuration and implement your own templates and recipes to configure Nginx for
 ice.  Default: 'ice'.
+* `node['ice']['nginx_default_server']` - Optional. Whether nginx should route all
+requests to Tomcat, regardless of Host: header.  Default: false.
 * `node['ice']['custom_resource_tags']` - Optional.  Array of custom resource tags
 to have ice process.  As described in the ice README you must explicitly enable these
 custom tags in your billing statements.
+* `node['ice']['reservation_capacity_poller_roles']` - Optional. Hash mapping 
+accounts to IAM roles in order to allow reservations in that account to be 
+polled.
+* `node['ice']['reservation_capacity_poller_external_ids']` - Optional. Hash mapping
+accounts to External IDs in order to allow reservations in that account to be
+polled.
+* `node['ice']['currencySign']` - Optional. Currency sign to use in place of $
+* `node['ice']['currencyRate']` - Optional. Conversion rate of USD to the above 
+currency. For example, if 1 pound = 1.5 dollar, then the rate is 0.6666667.
+* `node['ice']['highstockUrl']` - Optional. URL to highstock.js if you need to 
+serve this over HTTPS (which the default Highstock CDN does not currently support)
+* `node['ice']['monthlycachesize']` - Optional. Monthly cache size. 
+* `node['ice']['cost_per_monitormetric_per_hour']` - Optional. Cost per monitor 
+metric per hour. 
+* `node['ice']['urlPrefix']` - Optional. URL of Ice installation, used to create
+links in alert emails.
+* `node['ice']['fromEmail']` - Optional. Email address from which Ice email 
+alerts are sent (must be registered in SES)
+* `node['ice']['ondemandCostAlertThreshold']` - Optional. EC2 On-Demand hourly 
+cost threshold at which an alert email should be sent.
+* `node['ice']['ondemandCostAlertEmails']` - Optional. Comma-separated list of 
+recipients for the On-Demand cost alert emails.
+* `node['ice']['resourceGroupCost']` - Optional. If set to `original`, Ice will 
+use the original costs from the billing file for Resource Groups.
+* `node['ice']['weeklyCostEmails']` - Optional. Set to `true` to enable weekly 
+cost emails.
+* `node['ice']['weeklyCostEmails_fromEmail']` - Optional. Email address from
+which weekly cost emails are sent (must be registered in SES)
+* `node['ice']['weeklyCostEmails_bccEmail']` - Optional. Email address to which
+weekly cost emails will be BCCed.
+* `node['ice']['weeklyCostEmails_numWeeks']` - Optional. How many weeks to
+include in the weekly cost emails
+* `node['ice']['logrotate_frequency']` - Optional. How often to rotate catalina.out.
+Default: 'weekly'
+* `node['ice']['logrotate_rotate']` - Optional. How many rotated copies of
+catalina.out to keep. Default: 52
 
 ## Usage
 
@@ -159,6 +201,7 @@ run_list:
 * Contributor: [Benton Roberts](https://github.com/benton)
 * Contributor: [Harry Wilkinson](https://github.com/harryw)
 * Contributor: [rampire](https://github.com/rampire)
+* Contributor: [Alex Greg](https://github.com/agreg)
 
 Copyright 2013 Medidata Solutions Worldwide
 

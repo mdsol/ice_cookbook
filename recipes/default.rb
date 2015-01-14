@@ -23,6 +23,7 @@ end
 
 include_recipe 'java'
 include_recipe 'tomcat'
+include_recipe 'logrotate'
 
 java_options = "#{node['tomcat']['java_options']} -Dice.role=#{node['ice']['iam_role']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
 
@@ -54,7 +55,17 @@ artifact_deploy 'ice' do
         mode '0755'
       only_if { node['ice']['processor']['enabled'] == true }
     end
-
+    
+    # Workaround for https://github.com/Netflix/ice/issues/100
+    ['tagdb','usage_daily','usage_monthly','usage_weekly','cost_daily','cost_monthly','cost_weekly','usage_hourly','cost_hourly'].each do |dir|
+      directory "#{node['ice']['processor']['local_dir']}/#{dir}_AWS Import" do
+          owner node['tomcat']['user']
+          group node['tomcat']['group']
+          mode '0755'
+        only_if { node['ice']['processor']['enabled'] == true && node['ice']['processor']['issue_100_workaround'] == true }
+      end
+    end
+    
     # Create ice local reader work directory
     directory node['ice']['reader']['local_dir'] do
         owner node['tomcat']['user']
@@ -79,6 +90,16 @@ artifact_deploy 'ice' do
       action :restart
     end
   }
+end
+
+# Configure logrotate
+logrotate_app "tomcat#{node['tomcat']['base_version']}" do
+  cookbook  "logrotate"
+  path "/var/log/tomcat#{node['tomcat']['base_version']}/catalina.out"
+  frequency node['ice']['logrotate_frequency']
+  rotate node['ice']['logrotate_rotate']
+  create "640 tomcat#{node['tomcat']['base_version']} adm"
+  options ["copytruncate","compress","missingok"]
 end
 
 if node['ice']['reader']['enabled'] == true
