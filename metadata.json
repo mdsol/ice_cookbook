@@ -15,7 +15,8 @@
     "tomcat": ">= 0.0.0",
     "nginx": ">= 0.0.0",
     "openssl": ">= 0.0.0",
-    "artifact": ">= 0.0.0"
+    "artifact": ">= 0.0.0",
+    "logrotate": ">= 0.0.0"
   },
   "recommendations": {
   },

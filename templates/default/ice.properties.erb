@@ -30,9 +30,21 @@ ice.startmillis=<%= node['ice']['start_millis'] %>
 ice.account.<%= account[0] %>=<%= account[1] %>
 <% end %>
 
-<% if node['ice']['owner_account'] && node['ice']['linked_accounts'].any? %>
+<% if node['ice']['owner_account'] && !node['ice']['linked_accounts'].nil? && node['ice']['linked_accounts'].any? %>
 ice.owneraccount.<%= node['ice']['owner_account'] %>=<%= node['ice']['linked_accounts'].join(',') %>
 <% end %>
+
+<%
+{"reservation_capacity_poller_roles" => "role", "reservation_capacity_poller_external_ids" => "externalId"}.each do |k,v|
+  if node['ice']['owner_account'] && !node['ice'][k].nil? && node['ice'][k].any?
+    node['ice'][k].each do |a,b|
+%>
+ice.owneraccount.<%= a %>.<%= v %>=<%= b %>
+<%
+end
+end
+end
+%>
 
 ice.reservationCapacityPoller=<%= node['ice']['reservation_capacity_poller'] %>
 
@@ -47,4 +59,10 @@ ice.companyName=<%= node['ice']['company_name'] %>
 ice.customTags=<%= node['ice']['custom_resource_tags'].join(',') %>
 <% end %>
 
-
+<% ['currencySign','currencyRate','highstockUrl','monthlycachesize','cost_per_monitormetric_per_hour','urlPrefix','fromEmail','ondemandCostAlertThreshold','ondemandCostAlertEmails','resourceGroupCost','weeklyCostEmails','weeklyCostEmails_fromEmail','weeklyCostEmails_bccEmail','weeklyCostEmails_numWeeks'].each do |prop|
+  if !node['ice'][prop].nil? %>
+ice.<%= prop %>=<%= node['ice'][prop] %>
+<%
+end
+end
+%>

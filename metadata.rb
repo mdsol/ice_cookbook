@@ -11,7 +11,7 @@ version          '0.2.13'
 end
 
 # Cookbook dependencies
-%w{ java apt nginx openssl }.each do |cb|
+%w{ java apt nginx openssl logrotate }.each do |cb|
   depends cb
 end
 
