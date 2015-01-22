@@ -1,4 +1,4 @@
-ice Cookbook
+Ice Cookbook
 ============
 
 This is an application cookbook for installing the Netflix Ice AWS usage and
