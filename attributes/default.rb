@@ -87,7 +87,7 @@ node.default['ice']['currencyRate']                          = nil
 # Highstock CDN does not currently support)
 node.default['ice']['highstockUrl']                          = nil
 
-#Monthly cache size.
+# Monthly cache size.
 node.default['ice']['monthlycachesize']                      = nil
 
 # Cost per monitor metric per hour.
