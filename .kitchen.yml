@@ -1,41 +1,32 @@
-<%  # This file contains ERB-interpreted YAML directives for testkitchen.
-    # Secrets are read from the local execution ENV into this file, and
-    # passed to the Chef tests via node attributes applied to the test suites.
-
+<%
 # To keep the YAML as simple as possible, some values are computed here
 AWS_ACCESS_KEY_ID = ENV['ICE_AWS_ACCESS_KEY_ID'] ||'ice_billing_aws_access_key_id'
 AWS_ACCESS_KEY_SECRET = ENV['ICE_AWS_ACCESS_KEY_SECRET'] || 'ice_billing_aws_secret_key'
 %>
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: true
+driver:
+  name: vagrant
+  customize:
+    cpus: 2
+    memory: 2048
+
+provisioner:
+  name: chef_zero
+  require_chef_omnibus: latest
+  data_path: test/shared
+  data_bags_path: test/integration/default/data_bags
 
 platforms:
-- name: ubuntu-12.04
-  driver_config:
-    box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-    customize:
-      memory: 1024
-    network:
-        - ["forwarded_port", {guest: 80, host: 80}]
-
-- name: centos-6.4
-  driver_config:
-    box: opscode-centos-6.4
-    box_url: https://opscode-vm.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
-    customize:
-      memory: 1024
-    network:
-        - ["forwarded_port", {guest: 80, host: 80}]
+  - name: ubuntu-14.04
+  - name: ubuntu-12.04
+  - name: centos-6.4
 
 suites:
 - name: default
   run_list:
-  - recipe[minitest-handler]
-  - recipe[ice]
-  - recipe[ice_cookbook_test]
+    - recipe[minitest-handler]
+    - recipe[ice]
+    - recipe[ice_cookbook_test]
   attributes:
     ice:
       version: 0.0.4

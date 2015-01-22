@@ -2,7 +2,7 @@
 # Cookbook Name:: ice
 # Recipe:: default
 #
-# Copyright 2013 Medidata Solutions Worldwide 
+# Copyright 2015 Medidata Solutions Worldwide
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,9 +17,7 @@
 # limitations under the License.
 #
 
-if node['platform_family'] == 'debian'
-  include_recipe 'apt'
-end
+include_recipe 'apt' if node['platform_family'] == 'debian'
 
 include_recipe 'java'
 include_recipe 'tomcat'
@@ -33,8 +31,8 @@ node.override['nginx']['default_site_enabled'] = false
 artifact_deploy 'ice' do
   version node['ice']['version']
   if node['ice']['version'] == 'stable'
-    artifact_location "https://netflixoss.ci.cloudbees.com/job/ice-master/lastStableBuild/artifact/target/ice.war"
-  else 
+    artifact_location 'https://netflixoss.ci.cloudbees.com/job/ice-master/lastStableBuild/artifact/target/ice.war'
+  else
     artifact_location "#{node['ice']['war_url']}/ice-#{node['ice']['version']}.war"
     artifact_checksum node['ice']['checksum']
   end
@@ -44,38 +42,38 @@ artifact_deploy 'ice' do
   skip_manifest_check true
   keep 2
   should_migrate false
-  force (node['ice']['force_deploy'] ? true : false)
+  force node['ice']['force_deploy'] ? true : false
   action :deploy
 
-  before_deploy Proc.new {
+  before_deploy proc {
     # Create ice local procesor work directory
     directory node['ice']['processor']['local_dir'] do
+      owner node['tomcat']['user']
+      group node['tomcat']['group']
+      mode '0755'
+      only_if { node['ice']['processor']['enabled'] == true }
+    end
+
+    # Workaround for https://github.com/Netflix/ice/issues/100
+    %w( tagdb usage_daily usage_monthly usage_weekly cost_daily cost_monthly cost_weekly usage_hourly cost_hourly ).each do |dir|
+      directory "#{node['ice']['processor']['local_dir']}/#{dir}_AWS Import" do
         owner node['tomcat']['user']
         group node['tomcat']['group']
         mode '0755'
-      only_if { node['ice']['processor']['enabled'] == true }
-    end
-    
-    # Workaround for https://github.com/Netflix/ice/issues/100
-    ['tagdb','usage_daily','usage_monthly','usage_weekly','cost_daily','cost_monthly','cost_weekly','usage_hourly','cost_hourly'].each do |dir|
-      directory "#{node['ice']['processor']['local_dir']}/#{dir}_AWS Import" do
-          owner node['tomcat']['user']
-          group node['tomcat']['group']
-          mode '0755'
         only_if { node['ice']['processor']['enabled'] == true && node['ice']['processor']['issue_100_workaround'] == true }
       end
     end
-    
+
     # Create ice local reader work directory
     directory node['ice']['reader']['local_dir'] do
-        owner node['tomcat']['user']
-        group node['tomcat']['group']
-        mode '0755'
-        only_if { node['ice']['reader']['enabled'] == true }
+      owner node['tomcat']['user']
+      group node['tomcat']['group']
+      mode '0755'
+      only_if { node['ice']['reader']['enabled'] == true }
     end
   }
 
-  configure Proc.new {
+  configure proc {
     # Create ice.properties file
     template "#{release_path}/WEB-INF/classes/ice.properties" do
       source 'ice.properties.erb'
@@ -85,7 +83,7 @@ artifact_deploy 'ice' do
     end
   }
 
-  restart Proc.new {
+  restart proc {
     service "tomcat#{node['tomcat']['base_version']}" do
       action :restart
     end
@@ -94,12 +92,12 @@ end
 
 # Configure logrotate
 logrotate_app "tomcat#{node['tomcat']['base_version']}" do
-  cookbook  "logrotate"
+  cookbook 'logrotate'
   path "/var/log/tomcat#{node['tomcat']['base_version']}/catalina.out"
   frequency node['ice']['logrotate_frequency']
   rotate node['ice']['logrotate_rotate']
   create "640 tomcat#{node['tomcat']['base_version']} adm"
-  options ["copytruncate","compress","missingok"]
+  options %w( copytruncate compress missingok )
 end
 
 if node['ice']['reader']['enabled'] == true
@@ -114,14 +112,14 @@ if node['ice']['reader']['enabled'] == true
     else
       node.override['ice']['public_hostname'] = node['fqdn']
     end
-  
+
     if node['ice']['nginx_port'] != 80
       node.override['ice']['public_hostname'] += ":#{node['ice']['nginx_port']}"
     end
   end
-  
+
   # Disable default site first
-  nginx_site 'default', :enable => false
+  nginx_site 'default', enable: false
 
   # Generate nginx ice site
   template "#{node['nginx']['dir']}/sites-available/ice" do
