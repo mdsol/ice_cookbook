@@ -17,7 +17,9 @@
 # limitations under the License.
 #
 
-include_recipe 'apt' if node['platform_family'] == 'debian'
+include_recipe 'chef-sugar'
+
+include_recipe 'apt' if debian?
 
 include_recipe 'java'
 include_recipe 'tomcat'
@@ -101,7 +103,10 @@ logrotate_app "tomcat#{node['tomcat']['base_version']}" do
 end
 
 if node['ice']['reader']['enabled'] == true
-  include_recipe 'nginx'
+  # Ugly hack to fix this issue: https://github.com/miketheman/nginx/issues/248
+  node.default['nginx']['pid'] = '/run/nginx.pid' if ubuntu_trusty?
+
+  include_recipe 'nginx::default'
 
   # Configure nginx site reverse proxy
   if node['ice']['public_hostname'].nil?
