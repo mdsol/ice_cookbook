@@ -1,4 +1,4 @@
-ice Cookbook Issues
+Ice Cookbook Issues
 ============================
 This file documents the steps necessary to report any issue with the ice
 cookbook. Following these guidelines will help ensure your issue is resolved in a
