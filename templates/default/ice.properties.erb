@@ -12,6 +12,12 @@ ice.processor.localDir=<%= node['ice']['processor']['local_dir'] %>
 ice.billing_s3bucketname=<%= node['ice']['billing_s3_bucket_name'] %>
 ice.billing_s3bucketprefix=<%= node['ice']['billing_s3_bucket_prefix'] %>
 
+<% if node['ice']['billing_payerAccountId'] %>
+ice.billing_payerAccountId=<%= node['ice']['billing_payerAccountId'] %>
+ice.billing_accessRoleName=<%= node['ice']['billing_accessRoleName'] %>
+ice.billing_accessExternalId=<%= node['ice']['billing_accessExternalId'] %>
+<% end %>
+
 ice.reader=<%= node['ice']['reader']['enabled'] ? 'true' : 'false' %>
 ice.reader.localDir=<%= node['ice']['reader']['local_dir'] %>
 
@@ -24,15 +30,24 @@ ice.startmillis=<%= node['ice']['start_millis'] %>
 ice.account.<%= account[0] %>=<%= account[1] %>
 <% end %>
 
-<% if node['ice']['owner_account'] && node['ice']['linked_accounts'].any? %>
+<% if node['ice']['owner_account'] && !node['ice']['linked_accounts'].nil? && node['ice']['linked_accounts'].any? %>
 ice.owneraccount.<%= node['ice']['owner_account'] %>=<%= node['ice']['linked_accounts'].join(',') %>
 <% end %>
 
-ice.reservationCapacityPoller=<%= node['ice']['reservation_capacity_poller'] %>
+<%
+{"reservation_capacity_poller_roles" => "role", "reservation_capacity_poller_external_ids" => "externalId"}.each do |k,v|
+  if node['ice']['owner_account'] && !node['ice'][k].nil? && node['ice'][k].any?
+    node['ice'][k].each do |a,b|
+%>
+ice.owneraccount.<%= a %>.<%= v %>=<%= b %>
+<%
+end
+end
+end
+%>
 
-# # reservation period, possible values are oneyear, threeyear
+ice.reservationCapacityPoller=<%= node['ice']['reservation_capacity_poller'] %>
 ice.reservationPeriod=<%= node['ice']['reservation_period'] %>
-# # reservation utilization, possible values are LIGHT, HEAVY
 ice.reservationUtilization=<%= node['ice']['reservation_utilization'] %>
 
 ice.companyName=<%= node['ice']['company_name'] %>
@@ -41,4 +56,10 @@ ice.companyName=<%= node['ice']['company_name'] %>
 ice.customTags=<%= node['ice']['custom_resource_tags'].join(',') %>
 <% end %>
 
-
+<% ['currencySign','currencyRate','highstockUrl','monthlycachesize','cost_per_monitormetric_per_hour','urlPrefix','fromEmail','ondemandCostAlertThreshold','ondemandCostAlertEmails','resourceGroupCost','weeklyCostEmails','weeklyCostEmails_fromEmail','weeklyCostEmails_bccEmail','weeklyCostEmails_numWeeks'].each do |prop|
+  if !node['ice'][prop].nil? %>
+ice.<%= prop %>=<%= node['ice'][prop] %>
+<%
+end
+end
+%>

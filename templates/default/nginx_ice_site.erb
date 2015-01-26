@@ -1,5 +1,5 @@
 server {
-  listen   <%= node['ice']['nginx_port'] %>;
+  listen   <%= node['ice']['nginx_port'] %><%= node['ice']['nginx_default_server'] == true ? " default_server" : '' %>;
 
   root <%= "#{node['tomcat']['webapp_dir']}/current" %>;
 

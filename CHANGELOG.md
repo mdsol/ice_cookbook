@@ -1,3 +1,9 @@
+## v0.2.14
+
+### Improvement
+
+- Updated documentation. [@rayrod2030]
+
 ## v0.2.13:
 
 ### Bug Fix
