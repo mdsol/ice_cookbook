@@ -30,6 +30,7 @@ node.default['ice']['processor']['issue_100_workaround']    = false
 
 # AWS access key id used for accessing AWS detailed billing files from S3.
 node.default['ice']['billing_aws_access_key_id']            = nil
+
 # AWS secret key used for accessing AWS detailed billing files from S3.
 node.default['ice']['billing_aws_secret_key']               = nil
 
@@ -38,8 +39,16 @@ node.default['ice']['billing_s3_bucket_name']               = nil
 # Directory in the S3 billing bucket containing AWS detailed billing files.
 node.default['ice']['billing_s3_bucket_prefix']             = nil
 
+# Specify your payer account id here if across-accounts IAM role access is used.
+# See Netflix Ice README section 1.6 for more details.
 node.default['ice']['billing_payerAccountId']               = nil
+
+# Specify your access IAM role name here if across-accounts IAM role access is used.
+# See Netflix Ice README section 1.6 for more details.
 node.default['ice']['billing_accessRoleName']               = nil
+
+# Specify external id here if it is used.  See Netflix Ice README section 1.6
+# for more details.
 node.default['ice']['billing_accessExternalId']             = nil
 
 # Name of the S3 bucket that Ice uses for processed AWS detailed billing files.
@@ -55,71 +64,73 @@ node.default['ice']['reader']['enabled']                    = true
 node.default['ice']['reader']['local_dir']                  = '/var/ice_reader'
 
 # Specify the start time in milliseconds for the processor to start processing billing files.
-node.default['ice']['start_millis']                         = 0
+# Value is number of milliseconds since unix epoch time.  Default: 90 days ago
+node.default['ice']['start_millis']                         = (Date.today - 90).strftime('%Q')
 
 # Optional.  Hash mapping of AWS account names to account numbers.  This is used
 # within Ice to give accounts human readable names in the UI.
 node.default['ice']['accounts']                             = {}
 
-# Hash mapping accounts to IAM roles in order to allow reservations in that
-# account to be polled.
+# To use BasicReservationService, you should also run reservation capacity
+# poller, which will call EC2 API (describeReservedInstances) to poll
+# reservation capacities for each reservation owner account defined in
+# ice.properties.  See Netflix Ice README Advanced Options section 2.
 node.default['ice']['reservation_capacity_poller']          = false
 
-node.default['ice']['iam_role']                             = 'ice'
+# Reservation period, possible values are oneyear, threeyear
+node.default['ice']['reservation_period']                   = 'threeyear'
+
+# Reservation utilization, possible values are LIGHT, MEDIUM, HEAVY, FIXED
+node.default['ice']['reservation_utilization']              = 'HEAVY'
 
 # Array of custom resource tags to have ice process.  As described in the ice
 # README you must explicitly enable these custom tags in your billing statements.
 node.default['ice']['custom_resource_tags']                 = []
 
-# # reservation period, possible values are oneyear, threeyear
-node.default['ice']['reservation_period']                   = 'threeyear'
-# # reservation utilization, possible values are LIGHT, HEAVY
-node.default['ice']['reservation_utilization']               = 'HEAVY'
-
 # Currency sign to use in place of $
-node.default['ice']['currencySign']                          = nil
+node.default['ice']['currencySign']                         = nil
 
 # Conversion rate of USD to the above currency. For example, if 1 pound = 1.5
 # dollar, then the rate is 0.6666667.
-node.default['ice']['currencyRate']                          = nil
+node.default['ice']['currencyRate']                         = nil
 
 # URL to highstock.js if you need to serve this over HTTPS (which the default
 # Highstock CDN does not currently support)
-node.default['ice']['highstockUrl']                          = nil
+node.default['ice']['highstockUrl']                         = nil
 
 # Monthly cache size.
-node.default['ice']['monthlycachesize']                      = nil
+node.default['ice']['monthlycachesize']                     = nil
 
 # Cost per monitor metric per hour.
-node.default['ice']['cost_per_monitormetric_per_hour']       = nil
+node.default['ice']['cost_per_monitormetric_per_hour']      = nil
 
 # URL of Ice installation, used to create links in alert emails.
-node.default['ice']['urlPrefix']                             = nil
+node.default['ice']['urlPrefix']                            = nil
 
-# Email address from which Ice email alerts are sent (must be registered in SES)
-node.default['ice']['fromEmail']                             = nil
+# Email address from which Ice email alerts are sent (must be registered in SES).
+node.default['ice']['fromEmail']                            = nil
 
 # EC2 On-Demand hourly cost threshold at which an alert email should be sent.
-node.default['ice']['ondemandCostAlertThreshold']            = nil
+node.default['ice']['ondemandCostAlertThreshold']           = nil
 
 # Comma-separated list of recipients for the On-Demand cost alert emails.
-node.default['ice']['ondemandCostAlertEmails']               = nil
+node.default['ice']['ondemandCostAlertEmails']              = nil
 
 # If set to `original`, Ice will use the original costs from the billing file
 # for Resource Groups.
-node.default['ice']['resourceGroupCost']                     = nil
+node.default['ice']['resourceGroupCost']                    = nil
 
 # Set to `true` to enable weekly cost emails.
-node.default['ice']['weeklyCostEmails']                      = nil
+node.default['ice']['weeklyCostEmails']                     = nil
 
-# Email address from which weekly cost emails are sent (must be registered in SES)
-node.default['ice']['weeklyCostEmails_fromEmail']            = nil
+# Email address from which weekly cost emails are sent (must be registered in SES).
+node.default['ice']['weeklyCostEmails_fromEmail']           = nil
 
 # Email address to which weekly cost emails will be BCCed.
-node.default['ice']['weeklyCostEmails_bccEmail']             = nil
+node.default['ice']['weeklyCostEmails_bccEmail']            = nil
 
-# How many weeks to include in the weekly cost emails
-node.default['ice']['weeklyCostEmails_numWeeks']             = nil
+# How many weeks to include in the weekly cost emails.
+node.default['ice']['weeklyCostEmails_numWeeks']            = nil
 
 # Optional. Fully qualified domain name used for configuring the Nginx reverse
 # proxy on Ice readers/UI nodes.

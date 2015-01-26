@@ -25,7 +25,7 @@ include_recipe 'java'
 include_recipe 'tomcat'
 include_recipe 'logrotate'
 
-java_options = "#{node['tomcat']['java_options']} -Dice.role=#{node['ice']['iam_role']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
+java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
 
 node.override['tomcat']['java_options'] = java_options
 node.override['nginx']['default_site_enabled'] = false
