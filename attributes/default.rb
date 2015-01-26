@@ -36,6 +36,7 @@ node.default['ice']['billing_aws_secret_key']               = nil
 
 # Name of the S3 bucket containing the AWS detailed billing files.
 node.default['ice']['billing_s3_bucket_name']               = nil
+
 # Directory in the S3 billing bucket containing AWS detailed billing files.
 node.default['ice']['billing_s3_bucket_prefix']             = nil
 
