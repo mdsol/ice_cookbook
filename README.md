@@ -1,130 +1,48 @@
-Description
-===========
-
-Application cookbook for installing the Netflix Ice AWS usage
-and cost reporting application.
-
-Requirements
+Ice Cookbook
 ============
 
-Chef 11.4.0+ and Ohai 6.10+ for platform_family use.
+This is an application cookbook for installing the Netflix Ice AWS usage and
+cost reporting application.
 
-This cookbook requires attributes be set based on the instructions for 
+Requirements
+------------
+- Chef 11 or higher
+- Ruby 1.9.3 or higher
+- This cookbook requires attributes be set based on the instructions for
 configuring the [Netflix Ice application](https://github.com/Netflix/ice).
-
-You will also need to enable Amazon's programmatic billing access to 
+- You will also need to enable Amazon's programmatic billing access to
 receive detailed billing reports.
 
-The following cookbooks are dependencies:
+Platform
+--------
+Tested on
 
-* apt (on ubuntu)
-* openssl
-* java
-* tomcat
-* nginx
-* artifact (Riot Games)
-* logrotate
-
-## Platform:
-
-Tested on 
-
+* Ubuntu 14.04
 * Ubuntu 12.04
 * Centos 6.4
 
-Other Debian and RHEL family distributions are assumed to work.
+Other Debian and RHEL family distributions are assumed to work but YMMV.
 
 Attributes
-==========
+----------
+In order to keep the README managable and in sync with the attributes, this
+cookbook documents attributes inline. The usage instructions and default
+values for attributes can be found in the individual attribute files.
 
-* `node['ice']['version']` - Ice version to download and install.  These 
-versions are packaged and hosted by Medidata Solutions until we can get the 
-Netflix Ice team to package and host official ice releases.  If you wish to 
-install the latest stable version from [Netflix](https://github.com/netflix/ice#download-snapshot-builds) directly, provide `stable`. 
-<i>Note: this option will always install the latest version even if its not
-backwards compatible.</i>
-* `node['ice']['checksum']` - Checksum for Ice WAR file.
-* `node['ice']['war_url']` - HTTP URL for Ice WAR file.
-* `node['ice']['force_redeploy']` - Will force a redeploy of the Ice WAR file.
-* `node['ice']['company_name']` - Organization name that is displayed in the 
-UI header.
-* `node['ice']['processor']['enabled']` - Enables the Ice processor.
-* `node['ice']['processor']['local_dir']` - Local work directory for the Ice
-processor.
-* `node['ice']['processor']['issue_100_workaround']` - Optional. Work around 
-https://github.com/Netflix/ice/issues/100 by pre-creating the directories it 
-expects to find. Default: false
-* `node['ice']['billing_aws_access_key_id']` - AWS access key id used for
-accessing AWS detailed billing files from S3.
-* `node['ice']['billing_secret_key']` - AWS secret key used for
-accessing AWS detailed billing files from S3.
-* `node['ice']['billing_s3_bucket_name']` - Name of the S3 bucket containing
-the AWS detailed billing files.
-* `node['ice']['billing_s3_bucket_prefix']` - Directory in the S3 billing bucket 
-containing AWS detailed billing files.
-* `node['ice']['work_s3_bucket_name']` - Name of the S3 bucket that Ice uses 
-for processed AWS detailed billing files.  This bucket is shared between the Ice
-processor and reader.
-* `node['ice']['work_s3_bucket_prefix']` - Directory in the S3 work bucket 
-containing the processed AWS detailed billing files.
-* `node['ice']['reader']['enabled']` - Enables the Ice reader and installs the
-Nginx reverse proxy.
-* `node['ice']['reader']['local_dir']` - Local work directory for the Ice reader.
-* `node['ice']['start_millis']` - Specify the start time in milliseconds for the 
-processor to start processing billing files.
-* `node['ice']['public_hostname']` - Optional. Fully qualified domain name used for 
-configuring the Nginx reverse proxy on Ice readers/UI nodes.
-* `node['ice']['accounts']` - Optional.  Hash mapping of AWS account names to 
-account numbers.  This is used within Ice to give accounts human readable names 
-in the UI.
-* `node['ice']['nginx_port']` - Optional.  Nginx port configuration. Default: 80.
-* `node['ice']['nginx_config']` - Optional.  Nginx site configuration chef 
-template name.  Default: 'nginx_ice_site.erb'.
-* `node['ice']['nginx_config_cookbook']` - Optional. Nginx custom configuration
-cookbook.  Use this if you'd like to bypass the default ice cookbook nginx 
-configuration and implement your own templates and recipes to configure Nginx for
-ice.  Default: 'ice'.
-* `node['ice']['nginx_default_server']` - Optional. Whether nginx should route all
-requests to Tomcat, regardless of Host: header.  Default: false.
-* `node['ice']['custom_resource_tags']` - Optional.  Array of custom resource tags
-to have ice process.  As described in the ice README you must explicitly enable these
-custom tags in your billing statements.
-* `node['ice']['reservation_capacity_poller_roles']` - Optional. Hash mapping 
-accounts to IAM roles in order to allow reservations in that account to be 
-polled.
-* `node['ice']['reservation_capacity_poller_external_ids']` - Optional. Hash mapping
-accounts to External IDs in order to allow reservations in that account to be
-polled.
-* `node['ice']['currencySign']` - Optional. Currency sign to use in place of $
-* `node['ice']['currencyRate']` - Optional. Conversion rate of USD to the above 
-currency. For example, if 1 pound = 1.5 dollar, then the rate is 0.6666667.
-* `node['ice']['highstockUrl']` - Optional. URL to highstock.js if you need to 
-serve this over HTTPS (which the default Highstock CDN does not currently support)
-* `node['ice']['monthlycachesize']` - Optional. Monthly cache size. 
-* `node['ice']['cost_per_monitormetric_per_hour']` - Optional. Cost per monitor 
-metric per hour. 
-* `node['ice']['urlPrefix']` - Optional. URL of Ice installation, used to create
-links in alert emails.
-* `node['ice']['fromEmail']` - Optional. Email address from which Ice email 
-alerts are sent (must be registered in SES)
-* `node['ice']['ondemandCostAlertThreshold']` - Optional. EC2 On-Demand hourly 
-cost threshold at which an alert email should be sent.
-* `node['ice']['ondemandCostAlertEmails']` - Optional. Comma-separated list of 
-recipients for the On-Demand cost alert emails.
-* `node['ice']['resourceGroupCost']` - Optional. If set to `original`, Ice will 
-use the original costs from the billing file for Resource Groups.
-* `node['ice']['weeklyCostEmails']` - Optional. Set to `true` to enable weekly 
-cost emails.
-* `node['ice']['weeklyCostEmails_fromEmail']` - Optional. Email address from
-which weekly cost emails are sent (must be registered in SES)
-* `node['ice']['weeklyCostEmails_bccEmail']` - Optional. Email address to which
-weekly cost emails will be BCCed.
-* `node['ice']['weeklyCostEmails_numWeeks']` - Optional. How many weeks to
-include in the weekly cost emails
-* `node['ice']['logrotate_frequency']` - Optional. How often to rotate catalina.out.
-Default: 'weekly'
-* `node['ice']['logrotate_rotate']` - Optional. How many rotated copies of
-catalina.out to keep. Default: 52
+Dependencies
+------------
+
+The following cookbooks are dependencies:
+
+* [apt][]
+* [yum][]
+* [java][]
+* [logrotate][]
+* [chef-sugar][]
+* [openssl][]
+* [nginx][]
+* [tomcat][]
+* [artifact][]
 
 ## Usage
 
@@ -136,7 +54,7 @@ Here is a sample role for creating an Ice processor node:
 ```YAML
 chef_type:           role
 default_attributes:
-description:         
+description:
 env_run_lists:
 json_class:          Chef::Role
 name:                ice-processor
@@ -167,7 +85,7 @@ Here is a sample role for creating an Ice reader node:
 ```YAML
 chef_type:           role
 default_attributes:
-description:         
+description:
 env_run_lists:
 json_class:          Chef::Role
 name:                ice-reader
@@ -194,19 +112,41 @@ run_list:
   recipe[ice]
 ```
 
-## License and Author
+Development
+-----------
+Please see the [Contributing](CONTRIBUTING.md) and [Issue Reporting](ISSUES.md) Guidelines.
 
-* Author: [Ray Rodriguez](https://github.com/rayrod2030) (rayrod2030@gmail.com)
-* Contributor: [akshah123](https://github.com/akshah123)
-* Contributor: [Benton Roberts](https://github.com/benton)
-* Contributor: [Harry Wilkinson](https://github.com/harryw)
-* Contributor: [rampire](https://github.com/rampire)
-* Contributor: [Alex Greg](https://github.com/agreg)
+License & Authors
+-----------------
+- Author: [Ray Rodriguez](https://github.com/rayrod2030) (rayrod2030@gmail.com)
+- Contributor: [akshah123](https://github.com/akshah123)
+- Contributor: [Benton Roberts](https://github.com/benton)
+- Contributor: [Harry Wilkinson](https://github.com/harryw)
+- Contributor: [rampire](https://github.com/rampire)
+- Contributor: [Alex Greg](https://github.com/agreg)
 
-Copyright 2013 Medidata Solutions Worldwide
+```text
+Copyright 2015 Medidata Solutions Worldwide
 
-Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0 (the “License”);
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
 
     http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an “AS IS” BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+```
+
+[apt]: https://github.com/opscode-cookbooks/apt
+[yum]: https://github.com/chef-cookbooks/yum
+[java]: https://github.com/agileorbit-cookbooks/java
+[logrotate]: https://github.com/stevendanna/logrotate
+[chef-sugar]: https://github.com/sethvargo/chef-sugar
+[openssl]: https://github.com/opscode-cookbooks/openssl
+[nginx]: https://github.com/miketheman/nginx
+[tomcat]: https://github.com/opscode-cookbooks/tomcat
+[artifact]: https://github.com/RiotGamesCookbooks/artifact-cookbook
