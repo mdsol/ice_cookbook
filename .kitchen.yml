@@ -19,14 +19,14 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
   - name: ubuntu-12.04
-  - name: centos-6.4
+  - name: centos-7.1
+  - name: centos-6.6
 
 suites:
 - name: default
   run_list:
     - recipe[minitest-handler]
     - recipe[ice]
-    - recipe[ice_cookbook_test]
   attributes:
     ice:
       version: 0.0.4
