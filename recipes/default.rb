@@ -86,19 +86,19 @@ artifact_deploy 'ice' do
   }
 
   restart proc {
-    service "tomcat#{node['tomcat']['base_version']}" do
+    service node['tomcat']['base_instance'] do
       action :restart
     end
   }
 end
 
 # Configure logrotate
-logrotate_app "tomcat#{node['tomcat']['base_version']}" do
+logrotate_app node['tomcat']['base_instance'] do
   cookbook 'logrotate'
-  path "/var/log/tomcat#{node['tomcat']['base_version']}/catalina.out"
+  path "#{node['tomcat']['log_dir']}/catalina.out"
   frequency node['ice']['logrotate_frequency']
   rotate node['ice']['logrotate_rotate']
-  create "640 tomcat#{node['tomcat']['base_version']} adm"
+  create "640 #{node['tomcat']['base_instance']} adm"
   options %w( copytruncate compress missingok )
 end
 
