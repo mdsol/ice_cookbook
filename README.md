@@ -19,7 +19,8 @@ Tested on
 
 * Ubuntu 14.04
 * Ubuntu 12.04
-* Centos 6.4
+* Centos 7.1
+* Centos 6.6
 
 Other Debian and RHEL family distributions are assumed to work but YMMV.
 
