@@ -137,6 +137,12 @@ node.default['ice']['weeklyCostEmails_numWeeks']            = nil
 # proxy on Ice readers/UI nodes.
 node.default['ice']['public_hostname']                      = nil
 
+# Setup Nginx.
+node.default['ice']['nginx_enabled']                        = true
+
+# Disable Nginx default site.
+node.default['ice']['nginx_disable_default_site']           = true
+
 # Nginx port configuration.
 node.default['ice']['nginx_port']                           = 80
 
