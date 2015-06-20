@@ -91,13 +91,11 @@ artifact_deploy 'ice' do
   }
 end
 
-
 # Allow httpd to connect to tomcat for proxy
 execute 'selinux httpd_can_network_connect' do
   command '/usr/sbin/setsebool httpd_can_network_connect true'
-  only_if { ['rhel', 'fedora'].include?(node['platform_family']) }
+  only_if { %w(rhel fedora).include?(node['platform_family']) }
 end
-
 
 # Configure logrotate
 logrotate_app node['tomcat']['base_instance'] do
@@ -109,4 +107,4 @@ logrotate_app node['tomcat']['base_instance'] do
   options %w( copytruncate compress missingok )
 end
 
-include_recipe 'ice::nginx' if node['ice']['reader']['enabled'] == true and node['ice']['nginx_enabled']
+include_recipe 'ice::nginx' if node['ice']['reader']['enabled'] == true && node['ice']['nginx_enabled']

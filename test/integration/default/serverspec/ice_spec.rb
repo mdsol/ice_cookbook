@@ -1,6 +1,6 @@
 require_relative '../../../kitchen/data/spec_helper'
 
-suffix = node['tomcat']['base_version'].to_i < 7 ? node['tomcat']['base_version'] : ""
+suffix = node['tomcat']['base_version'].to_i < 7 ? node['tomcat']['base_version'] : ''
 
 describe 'should be running tomcat6 on port 8080' do
   describe service("tomcat#{suffix}") do
