@@ -46,7 +46,7 @@ suites:
   includes:
     - ubuntu-12.04
     - ubuntu-14.04
-- name: tomcat6
+- name: tomcat6-rhel
   run_list:
     - recipe[minitest-handler]
     - recipe[ice]
@@ -68,7 +68,7 @@ suites:
       work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
   includes:
     - centos-6.6
-- name: tomcat7
+- name: tomcat7-rhel
   run_list:
     - recipe[minitest-handler]
     - recipe[ice]

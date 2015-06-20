@@ -91,10 +91,11 @@ artifact_deploy 'ice' do
   }
 end
 
+
 # Allow httpd to connect to tomcat for proxy
 execute 'selinux httpd_can_network_connect' do
   command '/usr/sbin/setsebool httpd_can_network_connect true'
-  only_if ['rhel', 'fedora'].include?(node['platform_family'])
+  only_if { ['rhel', 'fedora'].include?(node['platform_family']) }
 end
 
 
