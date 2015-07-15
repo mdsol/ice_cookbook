@@ -1,6 +1,6 @@
 <%
 # To keep the YAML as simple as possible, some values are computed here
-AWS_ACCESS_KEY_ID = ENV['ICE_AWS_ACCESS_KEY_ID'] ||'ice_billing_aws_access_key_id'
+AWS_ACCESS_KEY_ID = ENV['ICE_AWS_ACCESS_KEY_ID'] || 'ice_billing_aws_access_key_id'
 AWS_ACCESS_KEY_SECRET = ENV['ICE_AWS_ACCESS_KEY_SECRET'] || 'ice_billing_aws_secret_key'
 %>
 ---
@@ -19,15 +19,18 @@ provisioner:
 platforms:
   - name: ubuntu-14.04
   - name: ubuntu-12.04
-  - name: centos-6.4
+  - name: centos-7.1
+  - name: centos-6.6
 
 suites:
-- name: default
+- name: tomcat6
   run_list:
     - recipe[minitest-handler]
     - recipe[ice]
-    - recipe[ice_cookbook_test]
   attributes:
+    tomcat:
+      base_version: 6
+      keytool: /usr/lib/jvm/default-java/bin/keytool
     ice:
       version: 0.0.4
       war_url: https://s3.amazonaws.com/dl.imedidata.net/ice
@@ -40,4 +43,50 @@ suites:
       work_s3_bucket_name: kitchen-tests
       billing_s3_bucket_prefix: ice-cookbook-tests-billing-<%= ENV['USER'] %>/
       work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
-      start_millis: 1369886400000
+  includes:
+    - ubuntu-12.04
+    - ubuntu-14.04
+- name: tomcat6-rhel
+  run_list:
+    - recipe[minitest-handler]
+    - recipe[ice]
+  attributes:
+    tomcat:
+      base_version: 6
+      keytool: /usr/lib/jvm/java-1.6.0/bin/keytool
+    ice:
+      version: 0.0.4
+      war_url: https://s3.amazonaws.com/dl.imedidata.net/ice
+      skip_manifest_check: true
+      checksum: eb9e7503585553bdebf9d93016bcbe7dc033c21e2b1b2f0df0978ca2968df047
+      company_name: Your Company
+      billing_aws_access_key_id: <%= AWS_ACCESS_KEY_ID %>
+      billing_aws_secret_key: <%= AWS_ACCESS_KEY_SECRET %>
+      billing_s3_bucket_name: kitchen-tests
+      work_s3_bucket_name: kitchen-tests
+      billing_s3_bucket_prefix: ice-cookbook-tests-billing-<%= ENV['USER'] %>/
+      work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
+  includes:
+    - centos-6.6
+- name: tomcat7-rhel
+  run_list:
+    - recipe[minitest-handler]
+    - recipe[ice]
+  attributes:
+    tomcat:
+      base_version: 7
+      keytool: /usr/lib/jvm/java-1.6.0/bin/keytool
+    ice:
+      version: 0.0.4
+      war_url: https://s3.amazonaws.com/dl.imedidata.net/ice
+      skip_manifest_check: true
+      checksum: eb9e7503585553bdebf9d93016bcbe7dc033c21e2b1b2f0df0978ca2968df047
+      company_name: Your Company
+      billing_aws_access_key_id: <%= AWS_ACCESS_KEY_ID %>
+      billing_aws_secret_key: <%= AWS_ACCESS_KEY_SECRET %>
+      billing_s3_bucket_name: kitchen-tests
+      work_s3_bucket_name: kitchen-tests
+      billing_s3_bucket_prefix: ice-cookbook-tests-billing-<%= ENV['USER'] %>/
+      work_s3_bucket_prefix: ice-cookbook-tests-work-<%= ENV['USER'] %>/
+  includes:
+    - centos-7.1

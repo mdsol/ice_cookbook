@@ -28,7 +28,6 @@ include_recipe 'logrotate'
 java_options = "#{node['tomcat']['java_options']} -Dice.s3AccessKeyId=#{node['ice']['billing_aws_access_key_id']} -Dice.s3SecretKey=#{node['ice']['billing_aws_secret_key']}"
 
 node.override['tomcat']['java_options'] = java_options
-node.override['nginx']['default_site_enabled'] = false
 
 artifact_deploy 'ice' do
   version node['ice']['version']
@@ -86,57 +85,26 @@ artifact_deploy 'ice' do
   }
 
   restart proc {
-    service "tomcat#{node['tomcat']['base_version']}" do
+    service node['tomcat']['base_instance'] do
       action :restart
     end
   }
 end
 
+# Allow httpd to connect to tomcat for proxy
+execute 'selinux httpd_can_network_connect' do
+  command '/usr/sbin/setsebool httpd_can_network_connect true'
+  only_if { %w(rhel fedora).include?(node['platform_family']) }
+end
+
 # Configure logrotate
-logrotate_app "tomcat#{node['tomcat']['base_version']}" do
+logrotate_app node['tomcat']['base_instance'] do
   cookbook 'logrotate'
-  path "/var/log/tomcat#{node['tomcat']['base_version']}/catalina.out"
+  path "#{node['tomcat']['log_dir']}/catalina.out"
   frequency node['ice']['logrotate_frequency']
   rotate node['ice']['logrotate_rotate']
-  create "640 tomcat#{node['tomcat']['base_version']} adm"
+  create "640 #{node['tomcat']['base_instance']} adm"
   options %w( copytruncate compress missingok )
 end
 
-if node['ice']['reader']['enabled'] == true
-  # Ugly hack to fix this issue: https://github.com/miketheman/nginx/issues/248
-  node.default['nginx']['pid'] = '/run/nginx.pid' if ubuntu_trusty?
-
-  include_recipe 'nginx::default'
-
-  # Configure nginx site reverse proxy
-  if node['ice']['public_hostname'].nil?
-    if node.attribute?('ec2')
-      node.override['ice']['public_hostname'] = node['ec2']['public_hostname']
-    elsif node.attribute?('cloud')
-      node.override['ice']['public_hostname'] = node['cloud']['public_hostname']
-    else
-      node.override['ice']['public_hostname'] = node['fqdn']
-    end
-
-    if node['ice']['nginx_port'] != 80
-      node.override['ice']['public_hostname'] += ":#{node['ice']['nginx_port']}"
-    end
-  end
-
-  # Disable default site first
-  nginx_site 'default' do
-    enable false
-  end
-
-  # Generate nginx ice site
-  template "#{node['nginx']['dir']}/sites-available/ice" do
-    cookbook node['ice']['nginx_config_cookbook']
-    source node['ice']['nginx_config']
-    mode 0644
-    owner node['nginx']['user']
-    group node['nginx']['group']
-  end
-
-  # Enable ice site
-  nginx_site 'ice'
-end
+include_recipe 'ice::nginx' if node['ice']['reader']['enabled'] == true && node['ice']['nginx_enabled']
