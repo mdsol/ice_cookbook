@@ -56,7 +56,7 @@ artifact_deploy 'ice' do
     end
 
     # Workaround for https://github.com/Netflix/ice/issues/100
-    %w( tagdb usage_daily usage_monthly usage_weekly cost_daily cost_monthly cost_weekly usage_hourly cost_hourly ).each do |dir|
+    %w(tagdb usage_daily usage_monthly usage_weekly cost_daily cost_monthly cost_weekly usage_hourly cost_hourly).each do |dir|
       directory "#{node['ice']['processor']['local_dir']}/#{dir}_AWS Import" do
         owner node['tomcat']['user']
         group node['tomcat']['group']
@@ -104,7 +104,7 @@ logrotate_app node['tomcat']['base_instance'] do
   frequency node['ice']['logrotate_frequency']
   rotate node['ice']['logrotate_rotate']
   create "640 #{node['tomcat']['base_instance']} adm"
-  options %w( copytruncate compress missingok )
+  options %w(copytruncate compress missingok)
 end
 
 include_recipe 'ice::nginx' if node['ice']['reader']['enabled'] == true && node['ice']['nginx_enabled']
