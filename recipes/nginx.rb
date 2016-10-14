@@ -9,13 +9,13 @@ include_recipe 'nginx::default'
 
 # Configure nginx site reverse proxy
 if node['ice']['public_hostname'].nil?
-  if node.attribute?('ec2')
-    node.override['ice']['public_hostname'] = node['ec2']['public_hostname']
-  elsif node.attribute?('cloud')
-    node.override['ice']['public_hostname'] = node['cloud']['public_hostname']
-  else
-    node.override['ice']['public_hostname'] = node['fqdn']
-  end
+  node.override['ice']['public_hostname'] = if node.attribute?('ec2')
+                                              node['ec2']['public_hostname']
+                                            elsif node.attribute?('cloud')
+                                              node['cloud']['public_hostname']
+                                            else
+                                              node['fqdn']
+                                            end
 
   if node['ice']['nginx_port'] != 80
     node.override['ice']['public_hostname'] += ":#{node['ice']['nginx_port']}"
